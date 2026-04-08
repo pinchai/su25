@@ -1,0 +1,42 @@
+.hero {
+    background: url('https://via.placeholder.com/1200x400') center/cover no-repeat;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 3rem;
+}
+
+.product-card {
+    margin-bottom: 10px;
+}
+
+
+.product-card img {
+    height: 200px;
+    object-fit: contain;
+}
+
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;   /* number of lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.hero {
+    background: url('/static/image/section.jpg') center/cover no-repeat;
+    color: white;
+}
+
+.hero h1 {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
