@@ -12,11 +12,38 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
+
+
+class Category(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    description = db.Column(db.String(255), nullable=True)
+
+
+class Product(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    cost = db.Column(db.Float, nullable=False, default=0.0)
+    price = db.Column(db.Float, nullable=False, default=0.0)
+    category_id = db.Column(
+        db.Integer,
+        db.ForeignKey('category.id'),
+        nullable=False
+    )
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('user.id'),
+        nullable=False
+    )
+    description = db.Column(db.String(255), nullable=True)
+
+
 @app.get('/')
 def home():
     return render_template('front/home.html', product=product)
@@ -40,7 +67,8 @@ def detail():
     price = request.args.get('price')
     description = request.args.get('description')
 
-    return render_template('front/detail.html', pro_id=pro_id, title=title, image=image, price=price, description=description)
+    return render_template('front/detail.html', pro_id=pro_id, title=title, image=image, price=price,
+                           description=description)
 
 
 @app.post('/create-user')
