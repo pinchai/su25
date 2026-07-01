@@ -1,7 +1,7 @@
 from flask import Flask
 from extensions import db, migrate
 from config import Config
-import front
+import front, admin
 
 
 app = Flask(__name__)
@@ -15,6 +15,8 @@ db.init_app(app)
 migrate.init_app(app, db)
 
 app.register_blueprint(front.front_bp, url_prefix='/')
+
+app.register_blueprint(admin.admin_bp, url_prefix='/admin')
 
 # load models
 import models
