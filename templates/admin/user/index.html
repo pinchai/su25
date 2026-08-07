@@ -27,7 +27,7 @@
                         <div class="card">
                             <div class="card-header">
 
-                                <a href="{{ url_for('add_user') }}" class="btn btn-primary">
+                                <a href="{{ url_for('admin_bp.add_user') }}" class="btn btn-primary">
                                     <i class="bi bi-plus-circle"></i>
                                     Add New User
                                 </a>
@@ -45,35 +45,33 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for user in rows %}
-                                        <tr>
-                                            <td>{{ user.id }}</td>
-                                            <td>
-                                                <img
-                                                        src="{{ url_for('static', filename='admin/image/' ~ user.image) }}"
-                                                        alt="{{ user.username }}"
-                                                        style="width: 50px; height: 50px; object-fit: contain; border-radius: 50%;"
-                                                        onerror="this.src='{{ url_for('static', filename='admin/image/no_image.png') }}';"
-                                                >
-                                            </td>
-                                            <td>{{ user.username }}</td>
-                                            <td>{{ user.email }}</td>
-                                            <td>{{ user.role }}</td>
-                                            <td>
-                                                <!-- Add action buttons here -->
-                                                <a href="{{ url_for('edit_user', user_id=user.id) }}"
-                                                   class="btn btn-sm btn-primary">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                    Edit
-                                                </a>
-                                                <a href="{{ url_for('confirm_delete', user_id=user.id) }}"
-                                                   class="btn btn-sm btn-danger">
-                                                    <i class="bi bi-trash3"></i>
-                                                    Delete
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <img
+                                                    src="{{ url_for('static', filename='admin/image/no_image.png') }}"
+                                                    alt="username"
+                                                    style="width: 50px; height: 50px; object-fit: contain; border-radius: 50%;"
+                                                    onerror="this.src='{{ url_for('static', filename='admin/image/no_image.png') }}';"
+                                            >
+                                        </td>
+                                        <td>heng dara</td>
+                                        <td>dara@mail.com</td>
+                                        <td>admin</td>
+                                        <td>
+                                            <!-- Add action buttons here -->
+                                            <a href="{{ url_for('admin_bp.edit_user', user_id=1) }}"
+                                               class="btn btn-sm btn-primary">
+                                                <i class="bi bi-pencil-square"></i>
+                                                Edit
+                                            </a>
+                                            <a href="{{ url_for('admin_bp.confirm_delete', user_id=1) }}"
+                                               class="btn btn-sm btn-danger">
+                                                <i class="bi bi-trash3"></i>
+                                                Delete
+                                            </a>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
