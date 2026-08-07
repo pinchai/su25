@@ -4,3 +4,4 @@ admin_bp = Blueprint('admin_bp', __name__,
                         template_folder='templates')
 
 from . import dashboard
+from . import user
