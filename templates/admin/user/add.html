@@ -36,7 +36,7 @@
                             </div>
                             <div class="card-body">
                                 <form
-                                        action="#"
+                                        action="{{ url_for('admin_bp.do_add_user') }}"
                                         method="POST"
                                 >
                                     <div class="form-group">
@@ -83,7 +83,7 @@
                                                 class="form-control"
                                                 id="password"
                                                 name="password"
-                                               required
+                                                required
                                         >
                                     </div>
                                     <div class="form-group">
