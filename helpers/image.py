@@ -1,0 +1,23 @@
+from werkzeug.utils import secure_filename
+import os
+
+UPLOAD_DIR = os.path.join("static", "image")
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+ALLOWED_EXT = {"png", "jpg", "jpeg", "gif"}
+
+def allowed(name):
+    return "." in name and name.rsplit(".", 1)[-1].lower() in ALLOWED_EXT
+
+
+def upload_image(file, name=""):
+    try:
+        if file and allowed(file.filename):
+            if name.strip() == "":
+                filename = secure_filename(file.filename)
+            else:
+                filename = name.strip()
+            file.save(os.path.join(UPLOAD_DIR, filename))
+            return filename
+    except Exception as e:
+        return f"error message: {e}"

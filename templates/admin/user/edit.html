@@ -38,11 +38,12 @@
                                 <form
                                         action="{{ url_for('admin_bp.do_edit_user') }}"
                                         method="POST"
+                                        enctype="multipart/form-data"
                                 >
                                     <input type="hidden" name="user_id" value="{{ user.id }}">
                                     <div class="form-group">
                                         <img
-                                                src="{{ url_for('static', filename='admin/image') }}/pofile.png"
+                                                src="{{ url_for('static', filename='image') }}/{{ user.profile }}"
                                                 alt="User Image"
                                                 id="image_preview"
                                                 style="width: 100px; height: 100px; object-fit: contain;"

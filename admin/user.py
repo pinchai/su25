@@ -1,3 +1,7 @@
+from multiprocessing.context import assert_spawning
+
+from sqlalchemy.orm import DeclarativeBase
+
 from models import User
 from . import admin_bp
 from flask import render_template, request, redirect, url_for
@@ -5,6 +9,7 @@ from sqlalchemy import text
 from extensions import db
 from models.user import User
 from werkzeug.security import generate_password_hash
+from helpers.image import upload_image
 
 
 @admin_bp.get('/user')
@@ -30,12 +35,16 @@ def add_user():
 @admin_bp.post('/user/add/')
 def do_add_user():
     form = request.form
+    file = request.files['image']
+    file_name = upload_image(file=file)
     user = User(
         username=form.get('username'),
         email=form.get('email'),
         role=form.get('role'),
-        password=generate_password_hash(form.get('password'))
+        password=generate_password_hash(form.get('password')),
+        profile=file_name
     )
+
     db.session.add(user)
     db.session.commit()
 
@@ -60,6 +69,8 @@ def edit_user(user_id):
 def do_edit_user():
     module = 'user'
     form = request.form
+    file = request.files['image']
+
     user_id = form.get('user_id')
     user = User.query.get(user_id)
 
@@ -68,6 +79,12 @@ def do_edit_user():
     user.role = form.get('role')
     if form.get('password'):
         user.password = generate_password_hash(form.get('password'))
+    if (file.filename).strip() != '':
+        if user.profile is None:
+            user.profile = upload_image(file=file)
+        else:
+            user.profile = upload_image(file=file, name=user.profile)
+
     db.session.commit()
 
     return redirect(url_for('admin_bp.user'))
