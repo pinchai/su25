@@ -1,7 +1,3 @@
-from multiprocessing.context import assert_spawning
-
-from sqlalchemy.orm import DeclarativeBase
-
 from models import User
 from . import admin_bp
 from flask import render_template, request, redirect, url_for
@@ -9,7 +5,7 @@ from sqlalchemy import text
 from extensions import db
 from models.user import User
 from werkzeug.security import generate_password_hash
-from helpers.image import upload_image
+from helpers.image import upload_image, delete_file
 
 
 @admin_bp.get('/user')
@@ -112,6 +108,11 @@ def user_delete():
     user = User.query.get(user_id)
     if user is None:
         return redirect(url_for('admin_bp.user'))
+
+    # delete image
+    if user.profile is not None:
+        delete_file(user.profile)
+
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for('admin_bp.user'))
