@@ -20,17 +20,6 @@ def upload_image(file, name=""):
             else:
                 filename = name.strip()
             file.save(os.path.join(UPLOAD_DIR, filename))
-
-            assert False, os.path.join(UPLOAD_DIR, filename)
-            org_path = os.path.join(UPLOAD_DIR, filename)
-
-
-            image_obj = Image.open(org_path)
-
-            resized = image_obj.copy()
-            resized.thumbnail(200, 200)
-            resized.save(UPLOAD_DIR,f"thum_{filename}")
-
             return filename
     except Exception as e:
         return f"error message: {e}"
