@@ -6,9 +6,11 @@ from extensions import db
 from models.user import User
 from werkzeug.security import generate_password_hash
 from helpers.image import upload_image, delete_file
+from .auth import login_required
 
 
 @admin_bp.get('/user')
+@login_required
 def user():
     module = 'user'
     sql = text("SELECT * FROM user")
@@ -23,12 +25,14 @@ def user():
 
 
 @admin_bp.get('/user/add')
+@login_required
 def add_user():
     module = 'user'
     return render_template('admin/user/add.html', module=module)
 
 
 @admin_bp.post('/user/add/')
+@login_required
 def do_add_user():
     form = request.form
     file = request.files['image']
@@ -48,6 +52,7 @@ def do_add_user():
 
 
 @admin_bp.get('/user/edit/<int:user_id>')
+@login_required
 def edit_user(user_id):
     module = 'user'
     sql = text("SELECT * FROM user WHERE id = :user_id")
@@ -62,6 +67,7 @@ def edit_user(user_id):
 
 
 @admin_bp.post('/user/edit/')
+@login_required
 def do_edit_user():
     module = 'user'
     form = request.form
@@ -87,6 +93,7 @@ def do_edit_user():
 
 
 @admin_bp.get('/user/confirm-delete/<int:user_id>')
+@login_required
 def confirm_delete(user_id):
     module = 'user'
     sql = text("SELECT * FROM user WHERE id = :user_id")
@@ -101,6 +108,7 @@ def confirm_delete(user_id):
 
 
 @admin_bp.post('/user/delete')
+@login_required
 def user_delete():
     module = 'user'
     form = request.form
