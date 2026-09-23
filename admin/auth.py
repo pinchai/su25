@@ -1,3 +1,4 @@
+from extensions import limiter
 from models import User
 from . import admin_bp
 from flask import render_template, request, session, flash, redirect, url_for
@@ -22,6 +23,7 @@ def admin_login():
 
 
 @admin_bp.post('/login')
+@limiter.limit("5 per minute")
 def admin_do_login():
     if request.method == "POST":
         username = request.form.get("username", "").strip()
@@ -44,3 +46,10 @@ def admin_do_login():
         else:
             flash("Invalid username or password.", "danger")
             return redirect(url_for("admin_bp.admin_login"))
+
+
+@admin_bp.get('/logout')
+@login_required
+def admin_logout():
+    session.clear()
+    return redirect(url_for("admin_bp.admin_login"))
