@@ -38,6 +38,7 @@
                                         action="{{ url_for('admin_bp.user_delete') }}"
                                         method="POST"
                                 >
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="user_id" value="{{ user.id }}">
                                     <h3
                                             style="background-color: yellow; padding: 10px; color: firebrick; text-align: center; border-radius: 5px;"

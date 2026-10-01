@@ -50,12 +50,12 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">Sign in to start your session</p>
 
+
             <form
                     action="{{ url_for('admin_bp.admin_login') }}"
                     method="post"
             >
-
-
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         <ul class=flashes>
