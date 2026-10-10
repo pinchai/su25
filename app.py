@@ -1,5 +1,5 @@
 from flask import Flask
-from extensions import db, migrate, limiter, csrf
+from extensions import db, migrate, limiter, csrf, cors
 from config import Config
 import front, admin, api
 
@@ -15,6 +15,7 @@ db.init_app(app)
 migrate.init_app(app, db)
 limiter.init_app(app)
 csrf.init_app(app)
+cors.init_app(app)
 
 
 app.register_blueprint(front.front_bp, url_prefix='/')
